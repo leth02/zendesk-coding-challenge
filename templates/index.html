@@ -8,6 +8,11 @@
         <link href="{{ url_for('static', filename='bootstrap_v5.0.0.css') }}" rel="stylesheet">
         <script src="{{ url_for('static', filename='tabulator.min.js') }}"></script>
         <script src="{{ url_for('static', filename='bootstrap.bundle_v5.0.0.js') }}"></script>
+        <style>
+            .table > :not(caption) > * > * {
+                padding: 0 !important;
+            }
+        </style>
     </head>
     <body>
         <div style="width: 100%; height: 100vh; display: flex; justify-content: center; flex-direction: column; align-items: center;">
@@ -19,13 +24,13 @@
             <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="padding: 1rem 2rem;">
                             <h5 class="modal-title" id="ticketModalLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div style="display: flex;">
-                                <div id="requester-name"></div>
+                        <div class="modal-body" style="padding: 1rem 2rem;">
+                            <div style="display: flex; margin-bottom: 10px; justify-content: space-between;">
+                                <div id="requester-name" style="font-weight: 600;"></div>
                                 <div id="created-at-time"></div>
                             </div>
                             <div id="ticket-description">

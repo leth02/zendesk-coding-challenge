@@ -78,6 +78,19 @@ function processTickets(data) {
 }
 
 
+function displayTicketDescription(description) {
+    let ticketDescriptionEl = document.querySelector("#ticketModal #ticket-description")
+    ticketDescriptionEl.textContent = "";
+
+    let paragraphStrings = description.split('\n').filter(p => p != "");
+    for (const paragraphString of paragraphStrings) {
+        const p = document.createElement('p');
+        p.textContent = paragraphString;
+        ticketDescriptionEl.append(p);
+    }
+}
+
+
 function createTicketTable() {
     ticketTable = new Tabulator(document.getElementById("ticket-table"), {
         data: Object.values(TICKETS),
@@ -97,10 +110,13 @@ function createTicketTable() {
             const ticketId = rowData['id'];
             const ticketSubject = rowData["subject"];
             const requesterId = rowData['requester_id'];
+            const createdAt = rowData['created_at'];
 
             const ticket = TICKETS[ticketId];
             document.querySelector("#ticketModal #ticketModalLabel").textContent = ticketSubject;
-            document.querySelector("#ticketModal #ticket-description").textContent = ticket["description"];
+            document.querySelector('#ticketModal #created-at-time').textContent = createdAt;
+
+            displayTicketDescription(ticket["description"]);
             
             if (ticket['requester_name']) {
                 document.getElementById("requester-name").textContent = ticket['requester_name'];
@@ -115,11 +131,11 @@ function createTicketTable() {
         
         columns:[
             {title:"Subject", field:"subject", width: "300"},
-            {title:"Requester", field:"requester_id"},
+            {title:"Requester ID", field:"requester_id"},
             {title:"Requested", field:"created_at"},
             {title:"Type", field:"type"},
             {title:"Priority", field:"priority"},
-            {title:"id", field: "id", visible: false}
+            {title:"id", field: "id", visible: false},
         ]
     });
 }
