@@ -47,7 +47,6 @@ function search(searchString, processFn, params) {
 
 function addRequesterName(json, params) {
     try {
-        console.log(json);
         result = json['results'][0];
         TICKETS[params['ticket_id']]['requester_name'] = result['name'];
         document.getElementById("requester-name").textContent = result['name'];
@@ -59,34 +58,42 @@ function addRequesterName(json, params) {
 
 
 function processTickets(data) {
-    TICKETS = {};
-    const tickets = data['tickets'];
-    for (const ticket of tickets) {
-        TICKETS[ticket['id']] = {
-            id: ticket['id'],
-            subject: ticket['subject'],
-            status: ticket['status'],
-            requester_id: ticket['requester_id'],
-            created_at: new Date(ticket['created_at']).toString().split(' ').slice(1,5).join(' '),
-            type: ticket['type'] ? ticket['type'] : 'ticket',
-            priority: ticket['priority'] ? ticket['priority'] : '-',
-            description: ticket['description']
-        };
-    }
+    try {
+        TICKETS = {};
+        const tickets = data['tickets'];
+        for (const ticket of tickets) {
+            TICKETS[ticket['id']] = {
+                id: ticket['id'],
+                subject: ticket['subject'],
+                status: ticket['status'],
+                requester_id: ticket['requester_id'],
+                created_at: new Date(ticket['created_at']).toString().split(' ').slice(1,5).join(' '),
+                type: ticket['type'] ? ticket['type'] : 'ticket',
+                priority: ticket['priority'] ? ticket['priority'] : '-',
+                description: ticket['description']
+            };
+        }
 
-    createTicketTable();
+        createTicketTable();
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 
 function displayTicketDescription(description) {
-    let ticketDescriptionEl = document.querySelector("#ticketModal #ticket-description")
-    ticketDescriptionEl.textContent = "";
+    try {
+        let ticketDescriptionEl = document.querySelector("#ticketModal #ticket-description")
+        ticketDescriptionEl.textContent = "";
 
-    let paragraphStrings = description.split('\n').filter(p => p != "");
-    for (const paragraphString of paragraphStrings) {
-        const p = document.createElement('p');
-        p.textContent = paragraphString;
-        ticketDescriptionEl.append(p);
+        let paragraphStrings = description.split('\n').filter(p => p != "");
+        for (const paragraphString of paragraphStrings) {
+            const p = document.createElement('p');
+            p.textContent = paragraphString;
+            ticketDescriptionEl.append(p);
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -148,4 +155,4 @@ let ticketModalElement = document.getElementById("ticketModal");
 ticketModalElement.addEventListener("hidden.bs.modal", function(event){
     document.querySelector("#ticketModal #ticketModalLabel").textContent = "";
     document.querySelector("#ticketModal #ticket-description").textContent = "";
-})
+});
