@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-from requests import get
+import requests
 from urllib.parse import urlencode
 from base64 import b64encode
 
@@ -32,11 +32,11 @@ def create_app(test_config=None):
 
 
     # ========== APIs ==========
-    @app.route('/api/tickets/get')
+    @app.route('/api/tickets/get', methods=["GET"])
     def get_tickets():
         url = app.config['ZENDESK_HOST'] + "/api/v2/tickets.json"
         headers = {"Authorization": "Basic {}".format(get_authorization_header())}
-        response = get(url, headers=headers)
+        response = requests.get(url, headers=headers)
         
         # Return a friendly message if the request fails
         if response.status_code != 200:
@@ -54,9 +54,8 @@ def create_app(test_config=None):
         }
 
         url = app.config['ZENDESK_HOST'] + "/api/v2/search.json?" + urlencode(params)
-        print(url)
         headers = {"Authorization": "Basic {}".format(get_authorization_header())}
-        response = get(url, headers=headers)
+        response = requests.get(url, headers=headers)
 
         # Return an error message if the request fails 
         if response.status_code != 200:
