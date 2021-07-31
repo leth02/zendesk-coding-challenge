@@ -37,6 +37,11 @@ def create_app(test_config=None):
         url = app.config['ZENDESK_HOST'] + "/api/v2/tickets.json"
         headers = {"Authorization": "Basic {}".format(get_authorization_header())}
         response = get(url, headers=headers)
+        
+        # Return a friendly message if the request fails
+        if response.status_code != 200:
+            return jsonify({"error": "Failed to get tickets. Please try again later."}), 404
+
         results = response.json()
         return jsonify(results), 200
 
@@ -52,6 +57,11 @@ def create_app(test_config=None):
         print(url)
         headers = {"Authorization": "Basic {}".format(get_authorization_header())}
         response = get(url, headers=headers)
+
+        # Return an error message if the request fails 
+        if response.status_code != 200:
+            return jsonify({"error": "Failed to search against the provided query string."}), 404
+
         results = response.json()
         return jsonify(results), 200
 
