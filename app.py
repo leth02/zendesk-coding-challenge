@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 from requests import post, get
+from urllib.parse import urlencode
 import base64
 
 API_TOKEN = "ERQExBDWQQpUBusqJIa5aA3RNdUHgqKNnabHH64O"
@@ -27,6 +28,20 @@ def get_tickets():
     results = response.json()
     return jsonify(results), 200
 
+
+@app.route('/api/search', methods=["POST"])
+def search():
+    search_string = request.json.get('search_string', '')
+    params = {
+        'query': search_string
+    }
+
+    url = HOST + "/api/v2/search.json?" + urlencode(params)
+    print(url)
+    headers = {"Authorization": "Basic {}".format(get_authorization_header())}
+    response = get(url, headers=headers)
+    results = response.json()
+    return jsonify(results), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8998)

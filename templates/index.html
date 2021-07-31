@@ -5,13 +5,36 @@
         <meta charset="utf-8">
         
         <link href="{{ url_for('static', filename='tabulator.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='bootstrap_v5.0.0.css') }}" rel="stylesheet">
         <script src="{{ url_for('static', filename='tabulator.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap.bundle_v5.0.0.js') }}"></script>
     </head>
     <body>
         <div style="width: 100%; height: 100vh; display: flex; justify-content: center; flex-direction: column; align-items: center;">
             <h3>Ticket Viewer App | Zendesk Coding Challenge - Tan Tho Le</h3>
 
             <div class="table bootstrap-datatable" id="ticket-table" style="max-height: 657px;width: 700px;"></div>
+
+            <!-- Ticket Modal -->
+            <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ticketModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display: flex;">
+                                <div id="requester-name"></div>
+                                <div id="created-at-time"></div>
+                            </div>
+                            <div id="ticket-description">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script src="{{ url_for('static', filename='main.js') }}"></script>
