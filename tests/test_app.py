@@ -53,5 +53,3 @@ class TestTicketViewerApp:
         response = client.get('/api/tickets/get')
         assert response.status_code == 404
         assert response.json['error'] == "Failed to get tickets. Please try again later."
-
-
