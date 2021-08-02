@@ -43,6 +43,7 @@ $ flask run
 **6. Navigate to http://127.0.0.1:5000/ on your browser and start using the application**
 
 **7. Stop the application and exit the virtual environment**
+
 Press CTRL+C and
 
 If you use virtual environment, type the following command:
