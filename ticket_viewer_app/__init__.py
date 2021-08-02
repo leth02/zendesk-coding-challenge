@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request, render_template
 import requests
 from urllib.parse import urlencode
 from base64 import b64encode
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def create_app(test_config=None):
@@ -11,7 +14,7 @@ def create_app(test_config=None):
     # default configuration for the app
     app.config.from_mapping(
         SECRET_KEY='zcc_tanthole_dev',
-        API_TOKEN='ERQExBDWQQpUBusqJIa5aA3RNdUHgqKNnabHH64O',
+        API_TOKEN=os.environ['API_TOKEN'],
         ZENDESK_HOST='https://zcctanthole.zendesk.com'
     )
 
