@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+# ========== Helper functions ==========
+def base64encode(string):
+    return b64encode(string.encode('utf-8')).decode('utf-8')
+
+
 def create_app(test_config=None):
     """Create and configure an instance of the Ticket Viewer Flask application."""
     app = Flask(__name__)
@@ -15,17 +20,17 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='zcc_tanthole_dev',
         API_TOKEN=os.environ['API_TOKEN'],
-        ZENDESK_HOST='https://zcctanthole.zendesk.com'
+        ZENDESK_HOST='https://zcctanthole.zendesk.com',
+        ZENDESK_EMAIL= "leth02@luther.edu"
     )
 
     # if the test config is passed, use it
     if test_config:
         app.config.update(test_config)
 
-    # ========== Helper functions ==========
+
     def get_authorization_header():
-        credentials = 'leth02@luther.edu/token:{api_token}'.format(api_token=app.config['API_TOKEN'])
-        return b64encode(credentials.encode('utf-8')).decode('utf-8')
+        return base64encode(app.config['ZENDESK_EMAIL'] + '/token:{api_token}'.format(api_token=app.config['API_TOKEN']))
 
 
     # ========== Views ==========

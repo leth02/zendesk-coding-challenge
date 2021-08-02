@@ -1,8 +1,8 @@
-from ticket_viewer_app import create_app
+from ticket_viewer_app import create_app, base64encode
 from pytest import fixture
 from unittest.mock import patch
 
-
+# Mock HTTP response objects for testing
 class MockResponse:
     def __init__(self, json_data, status_code):
         self.json_data = json_data
@@ -11,15 +11,21 @@ class MockResponse:
     def json(self):
         return self.json_data
 
-
 def mock_requests_get_tickets(*args, **kwargs):
     return MockResponse({"count": 100, "tickets": []}, 200)
-
 
 def mock_requests_get_tickets_fails_404(*args, **kwargs):
     return MockResponse({"error": "Failed to get tickets. Please try again later."}, 404)
 
 
+# Test utility helper functions
+class TestUtilities:
+    def test_base64encode(self):
+        response = base64encode("jdoe@example.com/token:6wiIBWbGkBMo1mRDMuVwkw1EPsNkeUj95PIz2akv")
+        assert response == "amRvZUBleGFtcGxlLmNvbS90b2tlbjo2d2lJQldiR2tCTW8xbVJETXVWd2t3MUVQc05rZVVqOTVQSXoyYWt2"
+
+
+# Test the ticket viewer app
 class TestTicketViewerApp:
     @fixture
     def client(self):
@@ -47,6 +53,7 @@ class TestTicketViewerApp:
         response = client.get('/api/tickets/get')
         assert isinstance(response.json['count'], int)
         assert isinstance(response.json['tickets'], list)
+
 
     @patch('requests.get', side_effect=mock_requests_get_tickets_fails_404)
     def test_get_tickets_fails_with_404(self, request, client):
