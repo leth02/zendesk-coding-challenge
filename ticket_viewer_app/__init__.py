@@ -3,8 +3,6 @@ import requests
 from urllib.parse import urlencode
 from base64 import b64encode
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 
 # ========== Helper functions ==========

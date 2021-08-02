@@ -27,17 +27,10 @@ $ python -m pip install -r requirements.txt
 **4. Set the API token for Zendesk API Authentication**
 
 In order to use the API from Zendesk, you need an API token. Please contact me to request one.
-After obtaining an API token, you can set it as an environment variable in two ways:
+After obtaining an API token, you can set it as an environment variable with the following command:
 
-- a/ Using export:
 ```
 $ export API_TOKEN={the_api_token}
-```
-
-- b/ Using an .env file:
-Create an .env file and paste the following statement to it
-```
-API_TOKEN={the_api_token}
 ```
 
 **5. Set up Flask and start the application**
