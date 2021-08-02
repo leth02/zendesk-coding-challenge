@@ -7,30 +7,47 @@ This is an application to view support tickets from my Zendesk account. What thi
 
 ## Install and run the application
 This project expects you to have Python (Python 3 preferred) on your machine. You can follow the instructions here to install Python if your machine does not have it: https://www.python.org/downloads/
-1) Clone the project to your machine
+
+**1. Clone the project to your machine**
 ```
 $ git clone https://github.com/leth02/zendesk-coding-challenge.git
 $ cd zendesk-coding-challenge
 ```
-2) Create and activate a virtual environment (recommended)
+**2. Create and activate a virtual environment (recommended)**
 ```
 $ python -m venv venv
 $ . venv/bin/activate
 ```
 
-3) Install required packages
+**3. Install required packages**
 ```
 $ python -m pip install -r requirements.txt
 ```
 
-4) Set up Flask and start the application
+**4. Set the API token for Zendesk API Authentication**
+
+In order to use the API from Zendesk, you need an API token. Please contact me to request one.
+After obtaining an API token, you can set it as an environment variable in two ways:
+
+- a/ Using export:
+```
+$ export API_TOKEN={the_api_token}
+```
+
+- b/ Using an .env file:
+Create an .env file and paste the following statement to it
+```
+API_TOKEN={the_api_token}
+```
+
+**5. Set up Flask and start the application**
 ```
 $ export FLASK_APP=ticket_viewer_app
 $ export FLASK_ENV=development
 $ flask run
 ```
 
-5) Navigate to http://127.0.0.1:5000/ on your browser and start using the application
+**6. Navigate to http://127.0.0.1:5000/ on your browser and start using the application**
 
 ## Test the application
 You can run tests using pytest. It will run all of the unit and functional tests.
